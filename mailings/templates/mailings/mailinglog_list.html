@@ -1,0 +1,27 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+    {% for object in object_list %}
+    <div class="col-8">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="card-text">{{ object }}</h4>
+            </div>
+            <div class="card-body">
+                <span class="text">Дата и время последней попытки: {{ object.date_last_attempt }}</span><br>
+                <span class="text">Статус: {{ log_status }} </span><br>
+                <span class="text">Тема сообщения: {{ object.mailing }}</span><br>
+                <span class="text">Cообщение: {{ message }}</span><br>
+                <span class="text">Клиенты: {{ clients }}</span><br>
+                <span class="text">Ошибки: {{ object.error }}</span><br>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

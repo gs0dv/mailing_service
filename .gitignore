@@ -1,0 +1,7 @@
+# Project exclude paths
+/env/
+.env
+/venv/
+.venv
+.idea
+__pycache__

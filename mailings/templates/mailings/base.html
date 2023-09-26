@@ -1,0 +1,99 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/album.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">О сервисе</h4>
+                    <p class="text-muted">Сервис позволяет просматривать, создавать, редактировать, а также удалять
+                        рассылки, которые отправляются по установленному расписанию </p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Меню</h4>
+                    {% if user.is_authenticated %}
+                    <span class="text-white"> Вы зашли как:  {{ user }} </span>
+                    <br>
+                    {% if user.is_staff %}
+                    <span class="text-white"> Вы менеджер </span>
+                    <hr>
+                    {% endif %}
+                    {% endif %}
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'mailings:index' %}">Главная</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:profile' %}">Профиль</a></li>
+                        {% if user.is_staff %}
+                        <li><a href="{% url 'users:users_list' %}">Пользователи</a></li>
+                        {% endif %}
+                        {% if not user.is_staff %}
+                        <li><a href="{% url 'mailings:clients_list' %}">Клиенты</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'mailings:mailings_list' %}">Рассылки</a></li>
+                        <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                        {% else %}
+                        <li><a href="{% url 'users:login' %}" {# class="text-white" #}>Войти</a></li>
+                        <li><a href="{% url 'users:register' %}" {# class="text-white" #}>Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="{% url 'mailings:index' %}" class="navbar-brand d-flex align-items-center">
+
+                <strong>Mailing service</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ title }}</h1>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</main>
+
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/holder.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Зарегистрированные пользователи</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for object in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Пользователь</h4>
+                </div>
+                <div class="card-body">
+                    <p class="list-unstyled mt-3 mb-4 text-start m-3">Имя:
+                        {% if object.first_name %}
+                        {{ object.first_name }}
+                        {% else %}
+                        Не указано
+                        {% endif %}
+                        <br>Фамилия:
+                        {% if object.last_name %}
+                        {{ object.last_name }}
+                        {% else %}
+                        Не указана
+                        {% endif %}</p>
+                    <p class="list-unstyled mt-3 mb-4 text-start m-3">Почта: {{ object.email }}</p>
+
+                </div>
+                <div class="card-footer">
+                    {% if object.is_active %}
+                <a class="btn btn-warning" href="{% url 'users:toggle_activity_user' object.pk %}">Деактивировать</a>
+                {% else %}
+                <a class="btn btn-success" href="{% url 'users:toggle_activity_user' object.pk %}">Активировать</a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

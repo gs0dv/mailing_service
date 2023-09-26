@@ -1,0 +1,33 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-12 mb-5">
+        <a class="btn btn-primary" href="{% url 'mailings:client_create' %}">Добавить клиента</a>
+    </div>
+
+    {% for object in object_list %}
+    <div class="col-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="card-text">{{ object }}</h4>
+            </div>
+            <div class="card-body">
+                <span class="text">Имя: {{ object.first_name }}</span><br>
+                <span class="text">Фамилия: {{ object.last_name }}</span><br>
+                <span class="text">email: {{ object.email }}</span><br>
+                <span class="text">Комментарий: {{ object.comment }}</span><br>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'mailings:client_update' object.pk %}" class="btn btn-link">Изменить</a>
+                <a href="{% url 'mailings:client_delete' object.pk %}" class="btn btn-outline-danger float-right">Удалить</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

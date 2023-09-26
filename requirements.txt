@@ -1,0 +1,9 @@
+Django
+ipython
+psycopg2-binary
+pillow
+pytils
+redis
+python-dotenv
+
+django4-background-tasks

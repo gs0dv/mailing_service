@@ -1,0 +1,39 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    {% if not user.is_staff %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-primary" href="{% url 'mailings:mailing_create' %}">Добавить рассылку</a>
+    </div>
+    {% endif %}
+
+    {% for object in object_list %}
+    <div class="col-4">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="card-text">{{ object.message_subject|title }}</h4>
+            </div>
+            <div class="card-body">
+                <p class="text">Текст рассылки:<br> {{ object.message_boby|truncatechars:100 }}</p><br>
+                <span class="text">Время рассылки: {{ object.mailing_time }}</span><br>
+                <span class="text">Периодичность: {{ object.period }}</span><br>
+                <span class="text">Статус: {{ object.status }}</span><br>
+                <span class="text">Начало: {{ object.date_start }}</span><br>
+                <span class="text">Завершение: {{ object.date_end|default:"-" }}</span><br>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'mailings:mailing_detail' object.pk %}" class="btn btn-link">Детали</a>
+                {% if not user.is_staff %}
+                <a href="{% url 'mailings:mailing_update' object.pk %}" class="btn btn-link">Изменить</a>
+                <a href="{% url 'mailings:mailing_delete' object.pk %}" class="btn btn-outline-danger float-right">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'mailings/base.html' %}
+
+{% block content%}
+
+<div>
+    <div class="row text-center">
+        <h4 class="">Полезная информация:</h4>
+    </div>
+    <div class="container">
+    <div class="row text-center">
+        <div class="col-4 lead">Количество рассылок всего: {{ mailings_total }} </div>
+        <div class="col-4 lead">Количество активных рассылок: {{ mailings_active }} </div>
+        <div class="col-4 lead">Количество уникальных клиентов для рассылок: {{ uniq_clients }} </div>
+    </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <h4 class="">Статьи из блога:</h4>
+    </div>
+    <div class="row text-center">
+        {% for blog in blogs_list %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="lead"> {{ blog.header }} </h4>
+                </div>
+                <div class="card-body">
+                    <p class="list-unstyled mt-3 mb-4 text-start m-3">
+                        {{ blog.body|truncatechars:50 }}
+                    </p>
+                </div>
+            </div>
+        </div>
+{% endfor %}
+    </div>
+</div>
+
+{% endblock %}

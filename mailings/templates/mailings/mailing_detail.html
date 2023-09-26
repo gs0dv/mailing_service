@@ -1,0 +1,49 @@
+{% extends 'mailings/base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ object|title }}</h1>
+</div>
+<div class="row text-center">
+    <div class="col-6">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">О рассылке</h4>
+            </div>
+            <div class="card-body">
+                <p class="text">Текст рассылки:<br> {{ object.message_boby }}</p><br>
+                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                    <li class="mb-2">Время рассылки: {{ object.mailing_time }}</li>
+                    <li class="mb-2">Периодичность: {{ object.period }}</li>
+                    <li class="mb-2">Статус: {{ object.status }}</li>
+                    <li class="mb-2">Начало: {{ object.date_start }}</li>
+                    <li class="mb-2">Завершение: {{ object.date_end|default:"-" }}</li>
+                </ul>
+                <table class="table">
+                    <tr>
+                        <td>Клиенты:</td>
+                        <td>
+                            {% for client in object.clients.all %}
+                            {{ client }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+                <a href="{% url 'mailings:logs_list' object.pk %}" class="btn btn-lg btn-block btn-outline-primary">Логи
+                    рассылки</a>
+                <hr>
+                {% if object.status == "Завершена" %}
+                <a href="{% url 'mailings:toggle_activity' object.pk %}"
+                   class="btn btn-lg btn-block btn-outline-primary">Восстановить рассылку</a>
+                {% else %}
+                <a href="{% url 'mailings:toggle_activity' object.pk %}"
+                   class="btn btn-lg btn-block btn-outline-primary">Остановить рассылку</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
